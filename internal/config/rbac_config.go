@@ -58,10 +58,10 @@ var RouteRoles = map[string][]string{
 	"DELETE:/api/v1/classes/:class_id/students/:student_id/permanent": {"admin"},
 
 	// ==================== EXAM ====================
-	"POST:/api/v1/exam/create": {"lead_teacher", "teacher"},
-	"POST:/api/v1/exam/save":   {"lead_teacher", "teacher"},
-	"GET:/api/v1/exam/get":     {"lead_teacher", "teacher"},
-	//"GET:/api/v1/exam/view":                {"student"} ====> To be added
+	"POST:/api/v1/exam/create":            {"lead_teacher", "teacher"},
+	"POST:/api/v1/exam/save":              {"lead_teacher", "teacher"},
+	"GET:/api/v1/exam/get":                {"lead_teacher", "teacher"},
+	"GET:/api/v1/exam/:exam_id":           {"lead_teacher", "teacher", "student"},
 	"POST:/api/v1/exam/correction/create": {"lead_teacher", "teacher"},
 	"POST:/api/v1/exam/correction/save":   {"lead_teacher", "teacher"},
 	"GET:/api/v1/exam/correction":         {"lead_teacher", "teacher"},

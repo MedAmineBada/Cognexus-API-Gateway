@@ -55,6 +55,7 @@ var AuthRouteFlags = []RouteFlag{
 var ExamRouteFlags = []RouteFlag{
 	{Path: "/api/v1/exam/create", Method: "POST", FlagName: "exam_orchestrator.create_exam"},
 	{Path: "/api/v1/exam/save", Method: "POST", FlagName: "exam_orchestrator.save_exam"},
+	{Path: "/api/v1/exam/:exam_id", Method: "GET", FlagName: "exam_orchestrator.view_exam"},
 	{Path: "/api/v1/exam/get", Method: "GET", FlagName: "exam_orchestrator.get_exam"},
 	{Path: "/api/v1/exam/correction/create", Method: "POST", FlagName: "exam_orchestrator.create_correction"},
 	{Path: "/api/v1/exam/correction/save", Method: "POST", FlagName: "exam_orchestrator.save_correction"},
