@@ -51,3 +51,42 @@ func ForwardToExamService(cfg *config.Config) gin.HandlerFunc {
 		io.Copy(context.Writer, resp.Body)
 	}
 }
+
+func ForwardToClassesService(cfg *config.Config) gin.HandlerFunc {
+	return func(context *gin.Context) {
+		targetURL := cfg.CLASS_SERVICE_URL + context.Request.URL.Path
+
+		newBody, err := io.ReadAll(context.Request.Body)
+		if err != nil {
+			context.JSON(500, gin.H{"error": "failed to read request body"})
+			return
+		}
+
+		newReq, err := http.NewRequest(context.Request.Method, targetURL, bytes.NewReader(newBody))
+		if err != nil {
+			context.JSON(500, gin.H{"error": "failed to create request"})
+			context.Abort()
+			return
+		}
+
+		newReq.Header.Set("Content-Type", context.GetHeader("Content-Type"))
+
+		client := &http.Client{}
+		resp, err := client.Do(newReq)
+		if err != nil {
+			context.JSON(500, gin.H{"error": "request failed"})
+			return
+		}
+		defer resp.Body.Close()
+
+		context.Status(resp.StatusCode)
+
+		for key, values := range resp.Header {
+			for _, value := range values {
+				context.Header(key, value)
+			}
+		}
+
+		io.Copy(context.Writer, resp.Body)
+	}
+}

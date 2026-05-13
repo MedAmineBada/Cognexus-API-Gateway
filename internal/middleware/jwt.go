@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func ValidateJWT(cfg *config.Config) gin.HandlerFunc {
+func ValidateAccessJWT(cfg *config.Config) gin.HandlerFunc {
 	return func(context *gin.Context) {
 		authHeader := context.GetHeader("Authorization")
 		if strings.TrimSpace(authHeader) == "" || !strings.HasPrefix(authHeader, "Bearer ") {
@@ -36,16 +36,23 @@ func ValidateJWT(cfg *config.Config) gin.HandlerFunc {
 			return
 		}
 
-		userID, ok := claims["user_id"].(string)
+		userID, ok := claims["sub"].(string)
 		if !ok {
 			context.JSON(401, gin.H{"error": "invalid user id"})
 			context.Abort()
 			return
 		}
 
-		userRole, ok := claims["user_role"].(string)
+		userRole, ok := claims["role"].(string)
 		if !ok {
 			context.JSON(401, gin.H{"error": "invalid user role"})
+			context.Abort()
+			return
+		}
+
+		tokenType, ok := claims["type"].(string)
+		if !ok || tokenType != "access" {
+			context.JSON(401, gin.H{"error": "invalid token type"})
 			context.Abort()
 			return
 		}
