@@ -67,6 +67,10 @@ var RouteRoles = map[string][]string{
 	"GET:/api/v1/exam/correction":         {"lead_teacher", "teacher"},
 	"POST:/api/v1/exam/:exam_id/submit":   {"student"},
 	"GET:/api/v1/exam/:exam_id/report":    {"lead_teacher", "teacher"},
+
+	"PATCH:/api/v1/exam/:exam_id/modify":  {"lead_teacher", "teacher"},
+	"DELETE:/api/v1/exam/:exam_id/delete": {"lead_teacher", "teacher"},
+	"GET:/api/v1/exam/:exam_id/grade":     {"student"},
 }
 
 func NormalizePath(path string) string {

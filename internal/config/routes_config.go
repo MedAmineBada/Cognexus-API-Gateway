@@ -60,6 +60,9 @@ var ExamRouteFlags = []RouteFlag{
 	{Path: "/api/v1/exam/correction/create", Method: "POST", FlagName: "exam_orchestrator.create_correction"},
 	{Path: "/api/v1/exam/correction/save", Method: "POST", FlagName: "exam_orchestrator.save_correction"},
 	{Path: "/api/v1/exam/correction", Method: "GET", FlagName: "exam_orchestrator.get_correction"},
+	{Path: "/api/v1/exam/:exam_id/modify", Method: "PATCH", FlagName: "exam_orchestrator.modify_exam"},
+	{Path: "/api/v1/exam/:exam_id/delete", Method: "DELETE", FlagName: "exam_orchestrator.delete_exam"},
+	{Path: "/api/v1/exam/:exam_id/grade", Method: "GET", FlagName: "exam_orchestrator.get_grades"},
 }
 
 var ClassesRouteFlags = []RouteFlag{
