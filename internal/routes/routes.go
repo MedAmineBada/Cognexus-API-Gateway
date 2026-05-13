@@ -11,7 +11,7 @@ import (
 func SetupRoutes(r *gin.Engine, cfg *config.Config) {
 	api := r.Group("/api/v1")
 
-	auth := api.Group("", middleware.ValidateRBAC(), middleware.CheckFlag())
+	auth := api.Group("", middleware.ValidateRBAC()) // middleware.CheckFlag()
 	{
 		authPublicRoutes := []string{
 			"/auth/student/register",
@@ -54,7 +54,7 @@ func SetupRoutes(r *gin.Engine, cfg *config.Config) {
 	exam := api.Group("/exam",
 		middleware.ValidateAccessJWT(cfg),
 		middleware.ValidateRBAC(),
-		middleware.CheckFlag(),
+		//middleware.CheckFlag(),
 	)
 	{
 		exam.Any("/*path", handlers.ForwardToExamService(cfg))
@@ -63,7 +63,7 @@ func SetupRoutes(r *gin.Engine, cfg *config.Config) {
 	classes := api.Group("/classes",
 		middleware.ValidateAccessJWT(cfg),
 		middleware.ValidateRBAC(),
-		middleware.CheckFlag(),
+		//middleware.CheckFlag(),
 	)
 	{
 		classes.Any("/*path", handlers.ForwardToClassesService(cfg))
